@@ -20,7 +20,7 @@
             * Usage:
                 CORRECT: ApiResponse.ok(reply, "organization", {id: 0, name: "My Organization"});
                 CORRECT: ApiResponse.ok(
-                    reply, "organization", [
+                    reply, "organizations", [
                         {id: 0, name: "My Organization"},
                         {id: 1, name: "Another organization}
                     ]
