@@ -92,14 +92,14 @@ const JSendFactory = {
         return {
             status: "fail",
             data: {[key]: value}
-        }
+        };
     },
     error: (message) => {
         return {
             status: "error",
             message: message
-        }
-    }
+        };
+    },
 }
 
 module.exports = ApiResponse;
