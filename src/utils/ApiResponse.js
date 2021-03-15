@@ -20,81 +20,85 @@
 
 
 const ApiResponse = {
-
     // Success
-    ok: (data) => {
-        return success(200, data);
+    ok: (reply, key, value) => {
+        const statusCode = 200;
+        const body = JSendFactory.success(key, value);
+        return reply.code(statusCode).send(body);
     },
-    created: (data) => {
-        return success(201, data);
+    created: (reply, key, value) => {
+        const statusCode = 201;
+        const body = JSendFactory.success(key, value);
+        return reply.code(statusCode).send(body);
     },
-    accepted: (data) => {
-        return success(202, data);
+    accepted: (reply, key, value) => {
+        const statusCode = 202;
+        const body = JSendFactory.success(key, value);
+        return reply.code(statusCode).send(body);
     },
-    noContent: () => {
-        return success(204, null);
+    noContent: (reply) => {
+        const statusCode = 204;
+        return reply.code(statusCode).send();
     },
 
     // Client Error
-    badRequest: (data) => {
-        return fail(400, data);
+    badRequest: (reply, key, value) => {
+        const statusCode = 400;
+        const body = JSendFactory.fail(key, value);
+        return reply.code(statusCode).send(body);
     },
-    notFound: (data) => {
-        return fail(404, data);
+    notFound: (reply, key, value) => {
+        const statusCode = 404;
+        const body = JSendFactory.fail(key, value);
+        return reply.code(statusCode).send(body);
     },
 
     // Server Error
-    internalServerError: (message) => {
-        return error(500, message);
+    internalServerError: (reply, message) => {
+        const statusCode = 500;
+        const body = JSendFactory.error(message);
+        return reply.code(statusCode).send(body);
     },
-    notImplemented: (message) => {
-        return error(501, message);
+    notImplemented: (reply, message) => {
+        const statusCode = 501;
+        const body = JSendFactory.error(message);
+        return reply.code(statusCode).send(body);
     },
-    badGateway: (message) => {
-        return error(502, message);
+    badGateway: (reply, message) => {
+        const statusCode = 502;
+        const body = JSendFactory.error(message);
+        return reply.code(statusCode).send(body);
     },
-    serviceUnavailable: (message) => {
-        return error(503, message);
+    serviceUnavailable: (reply, message) => {
+        const statusCode = 503;
+        const body = JSendFactory.error(message);
+        return reply.code(statusCode).send(body);
     },
-    gatewayTimeout: (message) => {
-        return error(504, message);
+    gatewayTimeout: (reply, message) => {
+        const statusCode = 504;
+        const body = JSendFactory.error(message);
+        return reply.code(statusCode).send(body);
     },
-
 }
 
-const success = (statusCode, data) => {
-    const jSendBody= {
-        status: "success",
-        statusCode: statusCode,
-        data: data
-    }
-    return {
-        statusCode: statusCode,
-        body: jSendBody
-    }
-}
-
-const fail = (statusCode, data) => {
-    const jSendBody = {
-        status: "fail",
-        statusCode: statusCode,
-        data: data
-    }
-    return {
-        statusCode: statusCode,
-        body: jSendBody
-    }
-}
-
-const error = (statusCode, message) => {
-    const jSendBody = {
-        status: "error",
-        statusCode: statusCode,
-        message: message
-    }
-    return {
-        statusCode: statusCode,
-        body: jSendBody
+const JSendFactory = {
+    success: (key, value) => {
+        return {
+            status: "success",
+            data: {[key]: value}
+        };
+    },
+    fail: (key, value) => {
+        return {
+            status: "fail",
+            data: {[key]: value}
+        }
+    },
+    error: (message) => {
+        return {
+            status: "error",
+            message: message
+        }
     }
 }
 
